@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+
+    <button type="button" class="btn btn-outline-warning"><a href = "{% url "blog_new" %}"><span style="color:darkorange">New Post</span></a></button>
+    <br><br>
+    {% for post in posts %}
+        <div class="card" style="width: 100%;">
+            <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.summary }}</p>
+                <a href= "{% url "read_blog_detail" post.id %}" class="btn btn-outline-dark"> More...</a>
+            </div>
+        </div>
+        <br>
+    {% endfor %}
+
+    {% if posts.has_previous %}
+    <a href="?page=1">맨 앞으로</a>
+    <a href="?page={{ posts.previous_page_number }}">이전으로</a>
+    {% endif %}
+
+    <span>{{ posts.number }}</span>
+    <span>/</span>
+    <span>{{ posts.paginator.num_pages }}</span>
+
+    {% if posts.has_next %}
+        <a href="?page={{ posts.next_page_number }}">다음으로</a>
+        <a href="?page={{ posts.paginator.num_pages }}">맨 뒤로</a>
+    {% endif %}
+
+{% endblock %}
